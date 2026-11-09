@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="SpendWise wallet icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="512" height="256" rx="112" fill="url(#shine)"/>
+  <g fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M132 172h248a24 24 0 0 1 24 24v152a24 24 0 0 1-24 24H132a24 24 0 0 1-24-24V172a24 24 0 0 1 24-24Z"/>
+    <path d="M108 196v-20a24 24 0 0 1 24-24h196"/>
+    <path d="M404 244h-76a44 44 0 0 0 0 88h76"/>
+  </g>
+  <circle cx="340" cy="288" r="14" fill="#ffffff"/>
+</svg>

@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+backend/spendwise.db
+backend/spendwise.db-shm
+backend/spendwise.db-wal
+backend/e2e.db
+backend/e2e.db-shm
+backend/e2e.db-wal
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env.local
+frontend/tsconfig.tsbuildinfo
+frontend/test-results/
+frontend/playwright-report/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

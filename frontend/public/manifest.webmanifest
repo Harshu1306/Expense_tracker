@@ -1,0 +1,45 @@
+{
+  "name": "SpendWise — Daily Expense Tracker",
+  "short_name": "SpendWise",
+  "description": "Offline-first daily expense tracker for income, expenses and budgets in Indian Rupees.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["finance", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add transaction",
+      "short_name": "Add",
+      "description": "Record a new expense or income",
+      "url": "/transactions/new",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Analytics",
+      "short_name": "Analytics",
+      "description": "See where your money goes",
+      "url": "/analytics",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}
