@@ -9,7 +9,14 @@ import type {
 } from "@/types/api";
 import type { LocalBudget, LocalTransaction } from "@/types";
 
-const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000").replace(
+// Local dev (npm run dev): talk to the FastAPI server on port 8000.
+// Deployed (Vercel / Android app): use same-origin requests, so "/api/..."
+// goes to the backend service on the same domain. Override with
+// NEXT_PUBLIC_API_URL if the backend ever lives on a different domain.
+const DEFAULT_API_URL =
+  process.env.NODE_ENV === "development" ? "http://localhost:8000" : "";
+
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_URL ?? DEFAULT_API_URL).replace(
   /\/$/,
   "",
 );
@@ -134,7 +141,9 @@ export function toApiBudget(budget: LocalBudget): ApiBudget {
 // Endpoints
 // ---------------------------------------------------------------------------
 export const api = {
-  baseUrl: API_BASE_URL,
+  // Shown in the UI. Empty base URL means "same domain as this page".
+  baseUrl:
+    API_BASE_URL || (typeof window !== "undefined" ? window.location.origin : ""),
 
   health(): Promise<{ status: string; database: string }> {
     return request("/api/health");
