@@ -2,9 +2,9 @@
 
 Run from the ``backend`` directory:
 
-    uvicorn main:app --reload --port 8000
+    python -m uvicorn main:app --reload --port 8000
 
-Swagger UI: http://localhost:8000/docs
+Swagger UI: http://localhost:8000/api/docs
 """
 
 from __future__ import annotations
@@ -35,6 +35,7 @@ from schemas import (
     TransactionUpdate,
 )
 
+
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     init_db()
@@ -50,11 +51,15 @@ app = FastAPI(
     ),
     version="1.0.0",
     lifespan=lifespan,
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
 )
 
 _origins = os.getenv(
     "SPENDWISE_CORS_ORIGINS",
-    "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,http://127.0.0.1:3001",
+    "http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001,"
+    "http://127.0.0.1:3001,https://expensetracker-21fz.vercel.app,"
+    "capacitor://localhost,http://localhost,https://localhost",
 )
 app.add_middleware(
     CORSMiddleware,
@@ -81,9 +86,10 @@ async def validation_exception_handler(_request, exc: RequestValidationError):
 
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(_request, exc: Exception):
+    # Do not leak exception text: database errors can contain connection details.
     return JSONResponse(
         status_code=500,
-        content={"detail": "Internal server error", "message": str(exc)},
+        content={"detail": "Internal server error"},
     )
 
 
@@ -92,14 +98,16 @@ def index() -> dict:
     return {
         "name": "SpendWise API",
         "version": "1.0.0",
-        "docs": "/docs",
-        "openapi": "/openapi.json",
+        "docs": "/api/docs",
+        "openapi": "/api/openapi.json",
     }
 
 
 @app.get("/api/health", response_model=HealthOut, tags=["meta"], summary="Health check")
 def health() -> HealthOut:
-    return HealthOut(status="ok", database=DATABASE_URL.split("///")[-1])
+    # Never return DATABASE_URL: for PostgreSQL it contains the password.
+    kind = "sqlite" if DATABASE_URL.startswith("sqlite") else "postgresql"
+    return HealthOut(status="ok", database=kind)
 
 
 # ---------------------------------------------------------------------------
